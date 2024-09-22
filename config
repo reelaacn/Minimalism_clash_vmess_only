@@ -1,0 +1,122 @@
+mixed-port: 7890
+allow-lan: false
+mode: "rule"
+log-level: "info"
+external-controller: "127.0.0.1:9999"
+dns:
+  enable: true
+  listen: "0.0.0.0:53"
+  ipv6: false
+  default-nameserver:
+  - "223.5.5.5"
+  - "114.114.114.114"
+  nameserver:
+  - "223.5.5.5"
+  - "114.114.114.114"
+  - "119.29.29.29"
+  - "180.76.76.76"
+  enhanced-mode: "fake-ip"
+  fake-ip-range: "18.18.18.18/16"
+  fake-ip-filter:
+  - "*.lan"
+  - "*.localdomain"
+  - "*.example"
+  - "*.invalid"
+  - "*.localhost"
+  - "*.test"
+  - "*.local"
+  - "*.home.arpa"
+  - "router.asus.com"
+  - "localhost.sec.qq.com"
+  - "localhost.ptlogin2.qq.com"
+  - "+.msftconnecttest.com"
+tun:
+  enable: true
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+  - "114.114.114.114"
+  - "180.76.76.76"
+  - "119.29.29.29"
+  - "223.5.5.5"
+  - "8.8.8.8"
+  - "8.8.4.4"
+  - "1.1.1.1"
+  - "1.0.0.1"
+proxies:
+node_info
+proxy-groups:
+- name: "♻️ 自动选择"
+  type: "url-test"
+  url: "http://www.cloudflare.com/cdn-cgi/trace"
+  interval: 300
+  tolerance: 50
+  proxies:
+node_name_list  
+- name: "🎯 全球直连"
+  type: "select"
+  proxies:
+  - "DIRECT"
+- name: "🛑 全球拦截"
+  type: "select"
+  proxies:
+  - "REJECT"  
+rule-providers:  
+  ProxyLite:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyLite.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/ProxyLite.list"
+  ChinaDomain:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/ChinaDomain.list"
+  ChinaCompanyIp:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/ChinaCompanyIp.list"  
+  LocalAreaNetwork:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/LocalAreaNetwork.list"  
+  GoogleCN:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/GoogleCN.list"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/BanAD.list"  
+  SteamCN:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/SteamCN.list"
+rules:
+- "RULE-SET,LocalAreaNetwork,🎯 全球直连"
+- "RULE-SET,BanAD,🛑 全球拦截"
+- "RULE-SET,GoogleCN,🎯 全球直连"
+- "RULE-SET,SteamCN,🎯 全球直连"
+- "RULE-SET,ProxyLite,♻️ 自动选择"
+- "RULE-SET,ChinaDomain,🎯 全球直连"
+- "RULE-SET,ChinaCompanyIp,🎯 全球直连"
+- "GEOIP,CN,🎯 全球直连"
