@@ -59,8 +59,8 @@ def read_node() -> List[Dict]:
         with open(CURRENT_PATH / "nodes.txt", "r", encoding="utf-8") as f:
             node_info = [decode_vmess(item) for item in f if item.startswith("vmess://")]
     except FileNotFoundError:
-        print("nodes.txt 文件未找到")
-    return [node for node in node_info if node]  # 过滤掉解码失败的节点
+        print("nodes.txt not found")
+    return [node for node in node_info if node]
 
 def set_node_name_list(node_info: List[Dict]) -> List[str]:
     node_name_list = [item['name'] for item in node_info if 'name' in item and item['name']]
@@ -77,7 +77,7 @@ if __name__ == "__main__":
         with open(CURRENT_PATH / "config", "r", encoding="utf-8") as f:
             config_content = f.read()
     except FileNotFoundError:
-        print("config 文件未找到")
+        print("config not found")
         config_content = ""
 
     node_name_list_str = "\n".join(f"  - {str(item)}" for item in node_name_list)
@@ -89,4 +89,4 @@ if __name__ == "__main__":
     with open(CURRENT_PATH / "clash.yaml", "w", encoding="utf-8") as f:
         f.write(config_content)
 
-    print(f">>>>>>>>> 总共生成{len(node_info)}个节点，当前目录已新增配置文件./clash.yaml。")
+    print(f">>>>>>>>> total{len(node_info)}nodes，check up current path./clash.yaml。")
