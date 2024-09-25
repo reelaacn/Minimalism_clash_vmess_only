@@ -16,7 +16,7 @@ dns:
   - "119.29.29.29"
   - "180.76.76.76"
   enhanced-mode: "fake-ip"
-  fake-ip-range: "18.18.18.18/16"
+  fake-ip-range: "198.18.0.1/16"
   fake-ip-filter:
   - "*.lan"
   - "*.localdomain"
@@ -48,11 +48,11 @@ node_info
 proxy-groups:
 - name: "♻️ 自动选择"
   type: "url-test"
-  url: "http://www.cloudflare.com/cdn-cgi/trace"
+  url: "http://www.gstatic.com/generate_204"
   interval: 300
   tolerance: 50
   proxies:
-node_name_list  
+node_name_list
 - name: "🎯 全球直连"
   type: "select"
   proxies:
@@ -60,8 +60,22 @@ node_name_list
 - name: "🛑 全球拦截"
   type: "select"
   proxies:
-  - "REJECT"  
-rule-providers:  
+  - "REJECT"
+rule-providers:
+  Apple:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/Apple.list"
+  Telegram:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/Telegram.list"
   ProxyLite:
     type: "http"
     behavior: "classical"
@@ -82,14 +96,28 @@ rule-providers:
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list"
     format: "text"
     interval: 3600
-    path: "./Clash/ChinaCompanyIp.list"  
+    path: "./Clash/ChinaCompanyIp.list"
+  ProxyMedia:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/ProxyMedia.list"
   LocalAreaNetwork:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list"
     format: "text"
     interval: 3600
-    path: "./Clash/LocalAreaNetwork.list"  
+    path: "./Clash/LocalAreaNetwork.list"
+  Microsoft:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/Microsoft.list"
   GoogleCN:
     type: "http"
     behavior: "classical"
@@ -103,7 +131,14 @@ rule-providers:
     url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list"
     format: "text"
     interval: 3600
-    path: "./Clash/BanAD.list"  
+    path: "./Clash/BanAD.list"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"
+    format: "text"
+    interval: 3600
+    path: "./Clash/BanProgramAD.list"
   SteamCN:
     type: "http"
     behavior: "classical"
@@ -114,9 +149,15 @@ rule-providers:
 rules:
 - "RULE-SET,LocalAreaNetwork,🎯 全球直连"
 - "RULE-SET,BanAD,🛑 全球拦截"
+- "RULE-SET,BanProgramAD,🛑 全球拦截"
 - "RULE-SET,GoogleCN,🎯 全球直连"
 - "RULE-SET,SteamCN,🎯 全球直连"
+- "RULE-SET,Microsoft,🎯 全球直连"
+- "RULE-SET,Apple,🎯 全球直连"
+- "RULE-SET,ProxyMedia,♻️ 自动选择"
+- "RULE-SET,Telegram,♻️ 自动选择"
 - "RULE-SET,ProxyLite,♻️ 自动选择"
 - "RULE-SET,ChinaDomain,🎯 全球直连"
 - "RULE-SET,ChinaCompanyIp,🎯 全球直连"
 - "GEOIP,CN,🎯 全球直连"
+- "MATCH,♻️ 自动选择"
